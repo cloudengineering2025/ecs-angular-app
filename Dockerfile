@@ -1,13 +1,13 @@
 # -------- Stage 1 : Build Angular App --------
-FROM node:20.19.6-alpine AS build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
-RUN npm run build --configuration production
+RUN npm run build -- --configuration=production
 
 # -------- Stage 2 : Serve using Nginx --------
 FROM nginx:alpine
