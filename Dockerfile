@@ -17,7 +17,7 @@ RUN npx ng build --configuration=production
 # -------- Stage 2 : Serve using Nginx --------
 FROM nginx:alpine
 
-COPY --from=build /app/dist/ecs-angular-app /usr/share/nginx/html
+COPY --from=build /app/dist/ecs-angular-app/browser /usr/share/nginx/html
 
 EXPOSE 80
 
