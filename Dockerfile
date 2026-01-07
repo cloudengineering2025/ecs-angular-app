@@ -3,11 +3,16 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
+RUN apk add --no-cache python3 make g++
+
 COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build -- --configuration=production
+
+ENV NODE_OPTIONS=--max_old_space_size=4096
+
+RUN npx ng build --configuration=production
 
 # -------- Stage 2 : Serve using Nginx --------
 FROM nginx:alpine
